@@ -1,0 +1,95 @@
+{% extends 'listings/base.html' %}
+  
+{% block content %}
+<section class="page">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-md-6 mt-5">
+        <h1>Nous contacter !</h1>
+        <p style="width: 95%;">
+          Nous serions ravis d'avoir de vos nouvelles ! 
+          Si vous avez des questions, des demandes spécifiques 
+          ou simplement envie de discuter de nos magnifiques meubles 
+          pour la maison, n'hésitez pas à nous contacter. 
+          Notre équipe dévouée est là pour vous aider et vous 
+          guider dans votre recherche du mobilier parfait. 
+          Que ce soit par téléphone, par e-mail ou en utilisant le 
+          formulaire de contact, nous sommes impatients 
+          de vous offrir une expérience client exceptionnelle. 
+          Ajoutez une touche d'élégance à votre intérieur en nous 
+          contactant dès aujourd'hui !
+        </p>
+      </div>
+      <div class="col-12 col-md-6  mt-5">
+        <form action="" method="post" name="ContactUs">
+          {% csrf_token %}
+          <input class="form-control me-2 text-bg-light mb-3" type="text" name="firstName" placeholder="Nom" aria-label="Search" required>
+          <input class="form-control me-2 text-bg-light mb-3" type="text" name="lastName" placeholder="Prénom" aria-label="Search" required>
+          <input class="form-control me-2 text-bg-light mb-3" type="email" name="email" placeholder="E-Mail" required>
+          <textarea class="form-control me-2 text-bg-light mb-3" name="message" placeholder="Ecrivez votre message ici." required></textarea>
+          <button class="btn btn-outline-secondary" type="submit">Envoyer</button>
+        </form>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-12 col-md-6 mt-5">
+        {% for social in socials %}
+          <div class="row">
+            <a href="{{ social.url }}" class="btn btn-secondary mt-4" style="width: 95%;">
+              {% autoescape off %}
+                {{ social.logo }} &nbsp; {{ social.name }}
+              {% endautoescape %}
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="col-12 col-md-6  mt-5">
+        <h1>Suivez-nous !</h1>
+        <p>
+          Suivez-nous sur les réseaux sociaux pour rester 
+          inspiré et informé des dernières tendances en matière de 
+          mobilier pour la maison ! Rejoignez notre communauté en 
+          ligne et découvrez des idées de décoration, des conseils 
+          d'aménagement et des offres exclusives. En nous suivant sur 
+          Tiktok, Instagram, Twitter, vous serez les premiers à être 
+          au courant de nos nouvelles collections, des promotions spéciales 
+          et des événements passionnants. Ne manquez pas cette opportunité 
+          de transformer votre intérieur en un espace élégant et confortable. 
+          Rejoignez-nous dès maintenant sur les réseaux sociaux et plongez 
+          dans l'univers du mobilier haut de gamme !
+        </p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 col-md-6 mt-5">
+        <h1>Rejoignez-nous !</h1>
+        <p style="width: 95%;">
+          Vous recherchez une carrière passionnante dans le domaine du 
+          mobilier pour la maison ? Rejoignez notre équipe dynamique et 
+          contribuez à créer des espaces de vie exceptionnels pour nos clients. 
+          En tant que magasin spécialisé dans le mobilier haut de gamme, 
+          nous offrons des opportunités stimulantes dans différents domaines, 
+          que ce soit la vente, le design d'intérieur, la logistique ou 
+          le service client. Nous valorisons la créativité, l'engagement 
+          envers l'excellence et le sens du service. En travaillant avec nous, 
+          vous serez immergé dans un environnement inspirant où vous pourrez 
+          développer vos compétences et évoluer professionnellement. 
+          Rejoignez notre équipe dès maintenant et participez à la création 
+          d'espaces de vie exceptionnels pour nos clients, tout en épanouissant 
+          votre carrière dans l'industrie du mobilier pour la maison.
+        </p>
+      </div>
+      <div class="col-12 col-md-6 mt-5 d-flex justify-content-center">
+        <a class="btn btn-secondary d-flex align-items-center justify-content-center" href="https://www.linkedin.com/in/saad-rafiqul-9a964220a/">
+          <i class="bi bi-linkedin"></i> &nbsp; Voir nos offres d'emplois
+        </a>
+      </div>
+    </div>
+  </div>
+  <form action="" method="post">
+
+  </form>
+</section>
+{% endblock %}

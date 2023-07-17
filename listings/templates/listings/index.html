@@ -1,0 +1,90 @@
+{% extends 'listings/base.html' %}
+  
+{% block content %}
+<!-- Header -->
+<div class="container bg-image-header" style="height: 75vh;">
+    
+</div>
+<!-- Fin du header -->
+
+<section class="page">
+    <!-- Informations -->
+    <div class="container mb-5">
+        <div class="row text-dark">
+            <div class="col text-center">
+                <i class="bi bi-gem fa-2x"></i>
+                <p>Service client 24h/24</p>
+            </div>
+            <div class="col text-center">
+                <i class="bi bi-arrow-clockwise fa-2x"></i>
+                <p>Remboursé ou échangé</p>
+            </div>
+            <div class="col text-center mb-5">
+                <i class="fas fa-chart-line fa-2x"></i>
+                <p>7 ans d'expérience</p>
+            </div>
+        </div>
+    </div>
+    <!--Dernière article sorti-->
+    {% for article in articles %}
+        {% if article.isNew %}    
+            <div class="container mt-5">
+                <div class="row bg-light text-dark p-4">
+                    <div class="col-12 col-md-7">
+                        <img src="{{ article.image.url }}" class="img-fluid" alt="{{ article.name }} logo">
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-5">
+                        <h4 class="text-uppercase">Nouveauté</h4>
+                        <h1>{{ article.name }}</h1>
+                        <p>{{ article.description }}</p>
+                        <a href="{% url 'article-detail' article.id %}" class="btn btn-outline-secondary">
+                            Achetez maintenant
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+    <!--Top offres-->
+    <div class="container">
+        <div class="row mt-5">
+            <h1>Les offres du moments</h1>
+            {% for article in articles %}
+                {% if article.isOnTrend %}
+                    <div class="mt-4 col-12 col-sm-6 col-md-4">
+                        <div class="card" style="width: 18rem;">
+                            <img src="{{ article.image.url }}" style="height: 250px;" class="card-img-top" alt="{{ article.name }} logo">
+                            <div class="card-body">
+                            <h5 class="card-title">{{ article.name }}</h5>
+                            <p class="card-text">{{ article.description }}</p>
+                            <p class="price">{{ article.price }} €</p>
+                            <a href="{% url 'article-detail' article.id %}" class="btn btn-outline-secondary">
+                                En savoir plus <i class="bi bi-caret-right-fill"></i>                           
+                            </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+            <a href="{% url 'boutique' %}" class="btn btn-outline-secondary mt-3">
+                Voit toutes les offres
+            </a>
+        </div>
+    </div>
+</section>
+
+<!--Catégorie-->
+<div class="container mb-3 mt-5">
+    <div class="row text-center">
+        <div class="col-12 col-md-6 bg-image p-5">
+            <h1 class="bg-dark bg-opacity-50 text-light rounded-3">Salle de bain</h1>
+            <a href="#" type="button" class="btn btn-secondary">Tout voir</a>
+        </div>
+        <div class="col-12 col-md-6 bg-image2 p-5">
+            <h1 class="bg-dark bg-opacity-50 text-light rounded-3">Cuisine</h1>
+            <a href="" type="button" class="btn btn-secondary">Tout voir</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

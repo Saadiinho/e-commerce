@@ -1,0 +1,108 @@
+{% extends 'listings/base.html' %}
+
+{% block content %}
+<section class="page">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a class="text-dark" href="{% url 'accueil' %}">Accueil</a></li>
+            <li class="breadcrumb-item"><a class="text-dark" href="{% url 'boutique' %}">Boutique</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ articles.name }}</li>
+        </ol>
+    </nav>
+    <div class="container mt-5">
+        <div class="row text-dark p-4 bg-light">
+            <div class="col-12 col-md-7">
+                <img src="{{ articles.image.url }}" class="img-fluid" alt="{{ articles.name }} logo">
+            </div>
+            <div class="col-12 col-md-5">
+                <h1>{{ articles.name }}</h1>
+                <p>{{ articles.description }}</p>
+                <p>{{ articles.price }} €</p>
+                <p>
+                    {% if articles.available %}
+                        <span class="bg-success text-light p-2">Disponible</span>
+                    {% else %}
+                        <span class="bg-danger text-light p-2">Indisponible</span>
+                    {% endif %}
+                </p>
+                <a href="#" class="btn btn-outline-dark">
+                    <i class="bi bi-basket2-fill fa-2x"></i> 
+                </a>
+            </div>
+        </div>
+    </div>
+    <div style="height: 10vh;">
+
+    </div>
+    <div class="container">
+        <div class="row mb-4">
+            <h1>Description</h1>
+            {{ articles.bigDescription }} <br><br><hr>
+        </div>
+        <div class="row mb-4">
+            <h1>Dimensions</h1>
+            Sa dimension est {{ articles.dimension }} <br><br>
+            <hr>
+        </div>
+        <div class="row">
+            <h1>Avis</h1>
+            {% for review in reviews %}
+                {% if review.article.name == articles.name %}
+                    <div class="row">
+                        <div class="d-inline-block">
+                            {% if review.score == 5 %}
+                                <i class="bi bi-star-fill fa-2x"></i>
+                                <i class="bi bi-star-fill fa-2x"></i>
+                                <i class="bi bi-star-fill fa-2x"></i>
+                                <i class="bi bi-star-fill fa-2x"></i>
+                                <i class="bi bi-star-fill fa-2x"></i>
+                            {% endif %}
+                            {% if review.score == 4 %}
+                                <i class="bi bi-star-fill fa-2x"></i>
+                                <i class="bi bi-star-fill fa-2x"></i>
+                                <i class="bi bi-star-fill fa-2x"></i>
+                                <i class="bi bi-star-fill fa-2x"></i>
+                                <i class="bi bi-star fa-2x"></i>
+                            {% endif %}
+                            {% if review.score == 3 %}
+                                <i class="bi bi-star-fill fa-2x"></i>
+                                <i class="bi bi-star-fill fa-2x"></i>
+                                <i class="bi bi-star-fill fa-2x"></i>
+                                <i class="bi bi-star fa-2x"></i>
+                                <i class="bi bi-star fa-2x"></i>
+                            {% endif %}
+                            {% if review.score == 2 %}
+                                <i class="bi bi-star-fill fa-2x"></i>
+                                <i class="bi bi-star-fill fa-2x"></i>
+                                <i class="bi bi-star fa-2x"></i>
+                                <i class="bi bi-star fa-2x"></i>
+                                <i class="bi bi-star fa-2x"></i>
+                            {% endif %}
+                            {% if review.score == 1 %}
+                                <i class="bi bi-star-fill fa-2x"></i>
+                                <i class="bi bi-star fa-2x"></i>
+                                <i class="bi bi-star fa-2x"></i>
+                                <i class="bi bi-star fa-2x"></i>
+                                <i class="bi bi-star fa-2x"></i>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {{ review.comment }} <br>
+                {% endif %}
+            {% endfor %} <br>
+            <hr>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="row mt-4">
+            <h1>Donnez votre avis </h1>
+            <form action="" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Envoyer">
+              </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

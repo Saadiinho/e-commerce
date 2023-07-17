@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+body{
+  padding: 0;
+  margin: 0;
+  color: #000;
+  font-family: 'Lato', sans-serif;
+}
+body .page{
+  margin: 20px 30px;
+}
+
+.bg-image{
+  background-image: url("/media/images/Salle-de-bain.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.bg-image2{
+  background-image: url("/media/images/Cuisine.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+
+/* Header */
+.bg-image-header{
+  background-image: url("/media/images/Devanture.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+header a{
+  font-size: 16px;
+}
+header h1{
+  text-align:center;
+  font-size: 100px;
+  padding: 150px;
+  color: black;
+  font-family: 'Permanent Marker', cursive;
+}
+/* Fin du header */
+
+.link-button{
+    display: inline-block;
+    width: 100%;
+    color: #000;
+    text-decoration: none;
+}
+/* Pied de page */
+footer{
+    padding: 25px 100px;
+    color: #828282;
+  }
+  footer .colonnes{
+    margin-left: 25%;
+    width: 50%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  footer a{
+    color: #828282;
+    text-decoration: none;
+    width: 100%;
+  }
+footer a:hover{
+    color: #000;
+  }
+  footer p{
+    text-align: center;
+  }
+  /* Fin du pied de page */

@@ -1,0 +1,34 @@
+<header class="py-4">
+    <nav class="navbar navbar-expand-md fixed-top navbar-light bg-light" data-bs-theme="dark">
+      <div class="container">
+        <a class="navbar-brand" href="{% url 'accueil' %}">
+          <img src="/docs/5.3/assets/brand/bootstrap-logo.svg" alt="Logo" width="30" height="24">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'accueil' %}">Accueil</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'boutique' %}">Boutique</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+            </li>
+            <li class="nav-items">
+              <a class="nav-link" id="panier" href="{% url 'panier' %}">
+                <i class="bi bi-basket2-fill"></i>
+              </a>
+            </li>
+            <li class="nav-items">
+              <a class="nav-link" id="recherche" href="{% url 'boutique' %}"><i class="bi bi-search"></i></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
