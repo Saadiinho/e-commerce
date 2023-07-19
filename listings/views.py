@@ -2,8 +2,10 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.db.models import Q
 from django.core.mail import send_mail
+from django.urls import reverse
+from django.http import HttpResponseRedirect
 from django.core.paginator import Paginator
-from listings.models import Article, Review, SocialNetwork
+from listings.models import Article, Review, SocialNetwork, Cart, CartItem
 from listings.form import ReviewForm, ContactUsForm
 
 
@@ -14,7 +16,10 @@ def accueil(request):
 
 def boutique(request):
     articles = Article.objects.all()
+    cart = Cart.objects.get(data = 'Panier')
+    cartItems = CartItem.objects.all()
 
+    #Partie de filtrage
     if request.method == 'POST':
         # Filtrage par prix
         filter_price = request.POST.get('selectPrice')
@@ -26,7 +31,6 @@ def boutique(request):
             articles_price = Article.objects.filter(Q(price__gte=200.0))
         else:
             articles_price = articles
-
         # Filtrage par catégorie
         filter_category = request.POST.get('selectCategory')
         if filter_category == '1':
@@ -43,7 +47,6 @@ def boutique(request):
             articles_category = Article.objects.filter(genre='Dec')
         else:
             articles_category = articles
-
         #Filtrage par dimension
         filter_dimension = request.POST.get('selectDimension')
         if filter_dimension == '1':
@@ -58,7 +61,6 @@ def boutique(request):
             articles_dimension = Article.objects.filter(dimension='XL')
         else:
             articles_dimension = articles
-
         # Filtrage par disponibilité
         filter_available = request.POST.get('selectAvailable')
         if filter_available == '1':
@@ -67,14 +69,23 @@ def boutique(request):
             articles_available = Article.objects.filter(available=False)
         else:
             articles_available = articles
-
         # Concaténation des résultats des filtres
         articles = articles_price & articles_category & articles_dimension & articles_available
 
+    #Partie de la barre de recherceh
     if request.method == 'GET':
         name = request.GET.get('recherche')
         if name is not None:
             articles = Article.objects.filter(name__icontains=name)
+    
+    #Partie de l'ajout du panier
+    if request.method == 'POST' and 'add-to-cart' in request.POST:
+        id_article = request.POST.get('add-to-cart')
+        print('Le bouton a été cliqué. ID du bouton :', id_article)
+        article = Article.objects.get(id=id_article)
+        new_item = CartItem(cart=cart, article=article, quantity=1)
+        new_item.save()
+        
     paginator = Paginator(articles, 12)
     page = request.GET.get('page')
     articles = paginator.get_page(page)
@@ -92,10 +103,6 @@ def article_detail(request, id):
         form = ReviewForm()
     return render(request,'listings/article_detail.html', {'articles': articles, 'reviews': reviews, 'form': form})
 
-def panier(request):
-    articles = Article.objects.all()
-    return render(request, 'listings/panier.html', {'articles': articles})
-
 def contact(request):
     socials = SocialNetwork.objects.all()
     if request.method == 'POST':
@@ -110,3 +117,31 @@ def contact(request):
             recipient_list=['saad.rafiqul1@gmail.com'],
         )
     return render(request, 'listings/contact.html', {'socials': socials})
+
+
+def panier(request):
+    cartItems = CartItem.objects.all()
+    cart = Cart.objects.get(data = 'Panier')
+    total_price = 0
+    for cartItem in cartItems:
+        total_price += cartItem.article.price
+    total_item = len(cartItems)
+    return render(request, 'listings/panier.html', {'cartItems': cartItems, 'cart': cart, 'total_price': total_price, 'total_item': total_item})
+
+# listings/views.py
+
+def cartItem_delete(request, id):
+    cartItem = CartItem.objects.get(id=id)
+    if request.method == 'POST':
+        cartItem.delete()
+        return HttpResponseRedirect(reverse('panier'))
+    return render(request,
+                    'listings/panier-delete-item.html',
+                    {'cartItem': cartItem})
+
+def cart_delete(request):
+    if request.method == 'POST':
+        CartItem.objects.all().delete()
+        return HttpResponseRedirect(reverse('panier'))
+    return render(request,
+                    'listings/panier-delete-all.html')

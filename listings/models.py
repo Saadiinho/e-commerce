@@ -43,3 +43,17 @@ class SocialNetwork(models.Model):
     logo = models.fields.CharField(max_length=2000)
     def __str__(self):
         return f'{self.name}'
+
+class Cart(models.Model):
+    data = models.CharField(max_length=100)
+    def __str__(self):
+        return f'Panier {self.id}'
+
+class CartItem(models.Model):
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField()
+    def __str__(self):
+        return f"{self.article.name} (Quantité : {self.quantity})"
+
+    

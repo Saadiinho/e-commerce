@@ -1,0 +1,27 @@
+{% extends 'listings/base.html' %}
+
+{% block content %}
+<section class="page">
+    <div class="row">
+        <div class="col-12 col-md-4">
+        </div>
+        <div class="col-12 col-md-4">
+            <h1>Supprimer cet article ?</h1>
+            <h4>Etes-vous sur de vouloir supprimer l'article ?</h4> <br><br>
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <input class="btn btn-outline-danger" type="submit" value="Supprimer">
+                    </form>
+                </div>
+                <div class="col-12 col-md-6">
+                    <a class="btn btn-outline-success" href="{% url 'panier' %}">Retour</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+        </div>
+    </div>
+</section>
+{% endblock %}

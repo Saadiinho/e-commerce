@@ -51,7 +51,7 @@
             <h1>Les offres du moments</h1>
             {% for article in articles %}
                 {% if article.isOnTrend %}
-                    <div class="mt-4 col-12 col-sm-6 col-md-4">
+                    <div class="mt-4 col-12 col-sm-6 col-md-3">
                         <div class="card" style="width: 18rem;">
                             <img src="{{ article.image.url }}" style="height: 250px;" class="card-img-top" alt="{{ article.name }} logo">
                             <div class="card-body">

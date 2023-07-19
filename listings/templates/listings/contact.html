@@ -2,6 +2,12 @@
   
 {% block content %}
 <section class="page">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a class="text-dark" href="{% url 'accueil' %}">Accueil</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Contact</li>
+    </ol>
+</nav>
   <div class="container">
     <div class="row">
       <div class="col-12 col-md-6 mt-5">
