@@ -81,11 +81,18 @@ def boutique(request):
     #Partie de l'ajout du panier
     if request.method == 'POST' and 'add-to-cart' in request.POST:
         id_article = request.POST.get('add-to-cart')
-        print('Le bouton a été cliqué. ID du bouton :', id_article)
         article = Article.objects.get(id=id_article)
         new_item = CartItem(cart=cart, article=article, quantity=1)
-        new_item.save()
-        
+        present = False
+        if new_item.article.available:
+            for cartItem in cartItems:
+                if cartItem.article.id == new_item.article.id:
+                    cartItem.quantity += 1
+                    cartItem.save()
+                    present = True
+            if present == False:
+                new_item.save()
+
     paginator = Paginator(articles, 12)
     page = request.GET.get('page')
     articles = paginator.get_page(page)
@@ -93,12 +100,26 @@ def boutique(request):
 
 def article_detail(request, id):
     articles = Article.objects.get(id=id)
+    cart = Cart.objects.get(data = 'Panier')
+    cartItems = CartItem.objects.all()
     reviews = Review.objects.all()
+    if request.method == 'POST' and 'add-to-cart' in request.POST:
+        print('Ajoute')
+        article = Article.objects.get(id=id)
+        new_item = CartItem(cart=cart, article=article, quantity=1)
+        present = False
+        if new_item.article.available:
+            for cartItem in cartItems:
+                if cartItem.article.id == new_item.article.id:
+                    cartItem.quantity += 1
+                    cartItem.save()
+                    present = True
+            if present == False:
+                new_item.save()
     if request.method == 'POST':
         form = ReviewForm(request.POST, initial={'article': articles})
         if form.is_valid():
             review = form.save()
-        return redirect('boutique')
     else: 
         form = ReviewForm()
     return render(request,'listings/article_detail.html', {'articles': articles, 'reviews': reviews, 'form': form})
@@ -124,7 +145,7 @@ def panier(request):
     cart = Cart.objects.get(data = 'Panier')
     total_price = 0
     for cartItem in cartItems:
-        total_price += cartItem.article.price
+        total_price += cartItem.article.price * cartItem.quantity
     total_item = len(cartItems)
     return render(request, 'listings/panier.html', {'cartItems': cartItems, 'cart': cart, 'total_price': total_price, 'total_item': total_item})
 

@@ -69,6 +69,7 @@
                             <h5 id="aa{{ article.id }}" class="card-title">{{ article.name }}</h5>
                             <p class="card-text">{{ article.description }}</p>
                             <p class="price">{{ article.price }} €</p>
+                            <div id="liveAlertBtn"></div>
                             <div class="row">
                                 <div class="col-12 col-md-9">
                                     <a href="{% url 'article-detail' article.id %}" class="btn btn-outline-secondary">
@@ -78,7 +79,7 @@
                                 <div class="col-12 col-md-3">
                                     <form action="" method="post">
                                         {% csrf_token %}
-                                        <button value="{{ article.id }}" name="add-to-cart" class="btn btn-outline-secondary" type="submit">
+                                        <button id="liveAlertBtn" value="{{ article.id }}" name="add-to-cart" class="btn btn-outline-secondary monBouton" type="submit">
                                             <i class="bi bi-basket2-fill"></i>
                                         </button>              
                                     </form> 

@@ -27,5 +27,5 @@ urlpatterns = [
     path('contact/', views.contact, name='contact'),
     path('panier/', views.panier, name='panier'),
     path('panier/<int:id>/delete/', views.cartItem_delete, name='delete_item'),
-    path('panier/tout-supprimer/', views.cart_delete, name='delete_all')
+    path('panier/tout-supprimer/', views.cart_delete, name='delete_all'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
